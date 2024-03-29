@@ -1,24 +1,28 @@
 //
-//  CoinsListObservable.swift
+//  CoinsMarketsObservable.swift
 //  MyMiniera
 //
-//  Created by softwave on 27/03/24.
+//  Created by lukluca on 28/03/24.
 //
 
 import Foundation
 import Combine
 
-class CoinsListObservable: ObservableObject {
+class CoinsMarketsObservable: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var values: [CoinsList] = []
+    @Published var values: [CoinMarket]?
     @Published var error: Error?
     
     init() {}
     
     func fetch() {
-        Network.CoinGecko.coinsList(includePlatform: nil).fetch()
+        let parameters = CoinsMarketsParameters(currency: "eur",
+                                                order: .marketCapDesc,
+                                                perPage: 10,
+                                                page: 1)
+        Network.CoinGecko.coinsMarkets(parameters: parameters).fetch()
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
@@ -32,3 +36,4 @@ class CoinsListObservable: ObservableObject {
         }).store(in: &cancellables)
     }
 }
+

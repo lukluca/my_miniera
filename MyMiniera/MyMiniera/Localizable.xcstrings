@@ -1,0 +1,18 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Current price:" : {
+
+    },
+    "My Miniera" : {
+
+    },
+    "Nothing found!" : {
+
+    },
+    "Something went wrong, please retry!" : {
+
+    }
+  },
+  "version" : "1.0"
+}
