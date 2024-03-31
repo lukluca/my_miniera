@@ -1,7 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " at " : {
+
+    },
+    "*" : {
+
+    },
+    "* Percentage calculated with 24 h of tollerance" : {
+
+    },
     "Current price:" : {
+
+    },
+    "Last updated " : {
+
+    },
+    "Market cap:" : {
 
     },
     "My Miniera" : {
@@ -11,6 +26,9 @@
 
     },
     "Something went wrong, please retry!" : {
+
+    },
+    "Too many request, please retry later!" : {
 
     }
   },

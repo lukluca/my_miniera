@@ -110,6 +110,12 @@ extension Network.CoinGecko {
         do {
             let request = try asURLRequest()
             
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            
             return URLSession.shared.dataTaskPublisher(for: request)
                 //.delay(for: 10 ,scheduler: RunLoop.main)
                 .subscribe(on: DispatchQueue.global(qos: .background))
@@ -122,7 +128,7 @@ extension Network.CoinGecko {
                     }
                     return data
                 }
-                .decode(type: T.self, decoder: JSONDecoder())
+                .decode(type: T.self, decoder: decoder)
                 .eraseToAnyPublisher()
         } catch {
             return Result<T, Error>.Publisher(error).eraseToAnyPublisher()

@@ -42,9 +42,16 @@ struct CoinsView: View {
                 }
                 .listStyle(.plain)
                 .navigationTitle("My Miniera")
+                .refreshable {
+                    viewModel.fetch()
+                }
             case .noResultsFound:
                 Text("Nothing found!")
                     .navigationTitle("My Miniera")
+            case .tooManyRequest:
+                Button("Too many request, please retry later!") {
+                    viewModel.fetch()
+                }
             case .failure:
                 Button("Something went wrong, please retry!") {
                     viewModel.fetch()
@@ -53,9 +60,6 @@ struct CoinsView: View {
             }
         }
         .onAppear {
-            viewModel.fetch()
-        }
-        .refreshable {
             viewModel.fetch()
         }
     }
@@ -85,9 +89,20 @@ extension CoinsView {
             coinsList.$error
                 .compactMap {$0}
                 .sink { [weak self] error in
-                debugPrint(error.localizedDescription)
-                self?.state = .failure
-            }
+                    debugPrint(error.localizedDescription)
+                    
+                    switch error {
+                    case let networkError as Network.NetworkError:
+                        switch networkError {
+                        case .invalid(statusCode: let code) where code == 429:
+                            self?.state = .tooManyRequest
+                        default:
+                            self?.state = .failure(error)
+                        }
+                    default:
+                        self?.state = .failure(error)
+                    }
+                }
             .store(in: &cancellables)
         }
         
@@ -104,7 +119,8 @@ extension CoinsView.ViewModel {
         case loading
         case successfullyFetched([CoinMarket])
         case noResultsFound
-        case failure
+        case tooManyRequest
+        case failure(Error)
     }
 }
 
@@ -122,18 +138,18 @@ extension CoinsView {
                     Text(coin.symbol)
                         .fontWeight(.ultraLight)
                 }
-                AsyncImage(url: coin.image) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(width: 50, height: 50)
                 HStack {
-                    Text("Current price:")
-                        .fontWeight(.light)
-                    Text(coin.currentPrice, format: .currency(code: "EUR"))
-                    BullInfo(viewModel: .init(isBull: coin.isBull))
+                    AsyncImage(url: coin.image) { image in
+                        image.resizable()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 50, height: 50)
+                    
+                    CurrentPrice(currentPrice: coin.currentPrice,
+                                 isBull: coin.isBull)
                 }
+                .padding(.bottom, 7)
             }
         }
     }
