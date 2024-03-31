@@ -9,16 +9,31 @@ import Foundation
 
 struct Coin: Decodable {
     let id: String
-    let symbol: String
-    let name: String
-    let image: Image
+    let description: [String : String]
+    let links: Links
 }
 
+extension Coin {
+    struct Links {
+        let homepage: [URL]
+    }
+}
+
+extension Coin.Links: Decodable {
+    
+    enum CodingKeys: CodingKey {
+        case homepage
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container: KeyedDecodingContainer<Coin.Links.CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
+        let strings = try container.decode([String].self, forKey: .homepage)
+        homepage = strings.compactMap { URL(string: $0) }
+    }
+}
 
 extension Coin {
-    struct Image: Decodable {
-        let thumb: String
-        let small: String
-        let large: String
+    var engDescription: String {
+        description["en"] ?? ""
     }
 }
