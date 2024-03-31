@@ -50,6 +50,7 @@ extension CurrentPrice.BullInfo {
 }
 
 // MARK: Preview
+
 #Preview("Bull") {
     CurrentPrice(currentPrice: 12345, isBull: true)
 }

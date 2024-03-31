@@ -2,7 +2,7 @@
 //  DetailView+Model.swift
 //  MyMiniera
 //
-//  Created by softwave on 31/03/24.
+//  Created by lukluca on 31/03/24.
 //
 
 import SwiftUI
@@ -13,27 +13,21 @@ extension DetailView {
         
         let coin: CoinMarket
         
-        private var cancellables = Set<AnyCancellable>()
-        
         @Published private var state: State
         
         @Published var isOnTooManyRequestError: Bool? = nil
-        
         @Published var description: AttributedString = ""
-        
         @Published var homepageText: String = ""
         @Published var homepageURL: URL?
-        
         @Published var redactionReasons: RedactionReasons = .placeholder
         
+        private var cancellables = Set<AnyCancellable>()
         private let coins = CoinsObservable()
         
         init(coin: CoinMarket, state: State) {
             
             self.coin = coin
             self.state = state
-            
-            apply(state: state)
             
             coins.$value
                 .compactMap {$0}
@@ -72,6 +66,7 @@ extension DetailView {
                 homepageText = ""
                 homepageURL = nil
                 redactionReasons = .placeholder
+                
             case .loading:
                 homepageText = "loading data"
                 if let url = URL(string: "https://www.loading.com") {
@@ -108,16 +103,8 @@ extension DetailView {
                 let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
                 homepageText = components?.host ?? ""
             }
-           
-            if let nsAttributedString = try? NSAttributedString(data: Data(detail.engDescription.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil),
-               var attributedString = try? AttributedString(nsAttributedString, including: \.uiKit) {
-                attributedString.font = .system(size: 15, weight: .regular)
-                description = attributedString
-            } else {
-                var attr = AttributedString(detail.engDescription)
-                attr.font = .system(size: 15, weight: .regular)
-                description = attr
-            }
+            
+            description = detail.engDescription.attributedHTML
         }
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct CoinsView: View {
     
@@ -18,11 +17,20 @@ struct CoinsView: View {
     
     var body: some View {
         NavigationView {
-            Group {
+            VStack(spacing: 20) {
+                
+                switch viewModel.errorStare {
+                case .initial:
+                    EmptyView()
+                case .tooManyRequest:
+                    ErrorView(isTooManyRequest: true, action: viewModel.fetch)
+                case .generalFailure:
+                    ErrorView(isTooManyRequest: false, action: viewModel.fetch)
+                }
+                
                 switch viewModel.state {
                 case .initial:
                     EmptyView()
-                       
                 case .loading:
                     ProgressView()
                 case .successfullyFetched(let models):
@@ -52,18 +60,9 @@ struct CoinsView: View {
                     }
                 case .noResultsFound:
                     Text("Nothing found!")
-                case .tooManyRequest:
-                    Button("Too many request, please retry later!") {
-                        viewModel.fetch()
-                    }
-                case .failure:
-                    Button("Something went wrong, please retry!") {
-                        viewModel.fetch()
-                    }
                 }
             }
             .navigationTitle("My Miniera")
-            
         }
         .onAppear {
             viewModel.fetch()
@@ -72,57 +71,6 @@ struct CoinsView: View {
 }
 
 extension CoinsView {
-    class ViewModel: ObservableObject {
-        
-        private var cancellables = Set<AnyCancellable>()
-        
-        @Published var state: State
-        
-        private let coinsList = CoinsMarketsObservable()
-        
-        init(state: State = .initial) {
-        
-            self.state = state
-            
-            coinsList.$values
-                .compactMap {$0}
-                .sink { [weak self] list in
-                    self?.state = list.isEmpty ? .noResultsFound : .successfullyFetched(list)
-                }
-                .store(in: &cancellables)
-            
-            coinsList.$error
-                .compactMap {$0}
-                .sink { [weak self] error in
-                    debugPrint(error.localizedDescription)
-                    self?.state = error.isTooManyRequest ? .tooManyRequest : .failure
-                }
-            .store(in: &cancellables)
-        }
-        
-        func fetch() {
-            guard !ProcessInfo.isOnPreview() else {
-                return
-            }
-            state = .loading
-            coinsList.fetch()
-        }
-    }
-}
-
-extension CoinsView.ViewModel {
-    enum State {
-        case initial
-        case loading
-        case successfullyFetched([CoinMarket])
-        case noResultsFound
-        case tooManyRequest
-        case failure
-    }
-}
-
-extension CoinsView {
-    
     struct Item: View {
         
         let coin: CoinMarket
@@ -153,8 +101,9 @@ extension CoinsView {
 }
 
 // MARK: Preview
+
 #Preview("Initial") {
-    CoinsView(viewModel: .init(state: .initial))
+    CoinsView(viewModel: .init(state: .initial, errorState: .initial))
 }
 
 #Preview("Loading") {
@@ -170,9 +119,14 @@ extension CoinsView {
 }
 
 #Preview("Too many request") {
-    CoinsView(viewModel: .init(state: .tooManyRequest))
+    CoinsView(viewModel: .init(errorState: .tooManyRequest))
 }
 
 #Preview("Failure") {
-    CoinsView(viewModel: .init(state: .failure))
+    CoinsView(viewModel: .init(errorState: .generalFailure))
+}
+
+#Preview("Failure with success") {
+    CoinsView(viewModel: .init(state: .successfullyFetched(.preview),
+                               errorState: .generalFailure))
 }

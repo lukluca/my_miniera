@@ -24,7 +24,7 @@ struct DetailView: View {
             
             if let isTooManyRequest = viewModel.isOnTooManyRequestError {
                 Section {
-                    Error(isTooManyRequest: isTooManyRequest,
+                    ErrorView(isTooManyRequest: isTooManyRequest,
                           action: viewModel.fetch)
                 }
             }
@@ -62,19 +62,11 @@ struct DetailView: View {
         .onAppear {
             viewModel.fetch()
         }
-        /*
-        .sheet(isPresented: $showSettings) {
-                SettingsView()
-                    .presentationDetents:(
-                        [.medium, .large],
-                        selection: $settingsDetent
-                     )
-            }
-         */
     }
 }
 
 // MARK: Preview
+
 #Preview("Initial") {
     DetailView(coin: .bitcoin, state: .initial)
 }

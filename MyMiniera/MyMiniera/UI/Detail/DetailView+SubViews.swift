@@ -2,7 +2,7 @@
 //  DetailView+SubViews.swift
 //  MyMiniera
 //
-//  Created by softwave on 31/03/24.
+//  Created by lukluca on 31/03/24.
 //
 
 import SwiftUI
@@ -28,45 +28,22 @@ extension DetailView {
 }
 
 extension DetailView {
-    struct Error: View {
-        
-        let isTooManyRequest: Bool
-        let action: () -> Void
-        
-        var body: some View {
-            if isTooManyRequest {
-                Button(action: action) {
-                    Text("Too many request, please retry later!")
-                        .foregroundColor(.red)
-                }
-            } else {
-                Button(action: action) {
-                    Text("Something went wrong, please retry!")
-                        .foregroundColor(.red)
-                }
-            }
-        }
-    }
-}
-
-extension DetailView {
     struct Description: View {
-    
+        
         let description: AttributedString
         let redactionReasons: RedactionReasons
-       
         
         var body: some View {
-            Text(description)
-                .redacted(reason: redactionReasons)
-                .lineLimit(3)
+            LineLimitView(text: description,
+                          limit: 3,
+                          redactionReasons: redactionReasons)
         }
     }
 }
 
 extension DetailView {
     struct Homepage: View {
-    
+        
         let redactionReasons: RedactionReasons
         let linkText: String
         let linkURL: URL
@@ -127,7 +104,7 @@ extension DetailView {
                             .fontWeight(.ultraLight)
                             .fontWidth(.condensed)
                     }
-
+                    
                 }
             }
         }
@@ -140,20 +117,16 @@ extension DetailView {
     DetailView.Image(url: .imagePreview)
 }
 
-#Preview("Error too many request") {
-    DetailView.Error(isTooManyRequest: true, action: {})
-}
-
-#Preview("General error") {
-    DetailView.Error(isTooManyRequest: false, action: {})
-}
-
 #Preview("Loading description") {
     DetailView.Description(description: AttributedString("loading"), redactionReasons: .placeholder)
 }
 
-#Preview("Description") {
+#Preview("Long Description") {
     DetailView.Description(description: AttributedString(.bitcoinEngDesc), redactionReasons: .invalidated)
+}
+
+#Preview("Short Description") {
+    DetailView.Description(description: AttributedString("Soo short"), redactionReasons: .invalidated)
 }
 
 #Preview("Loading homepage") {
@@ -166,4 +139,47 @@ extension DetailView {
 
 #Preview("MarketData") {
     DetailView.MarketData(coin: .bitcoin)
+}
+
+// MARK: LineLimitView
+private struct LineLimitView: View {
+    
+    let text: AttributedString
+    let limit: Int
+    let redactionReasons: RedactionReasons
+    
+    @State private var isExpanded = false
+    @State private var canBeExpanded = false
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text(text)
+                .redacted(reason: redactionReasons)
+                .lineLimit(isExpanded ? nil : limit)
+                .background {
+                    ViewThatFits(in: .vertical) {
+                        Text(text)
+                            .redacted(reason: redactionReasons)
+                            .hidden()
+                        Color.clear
+                            .onAppear {
+                                canBeExpanded = true
+                            }
+                    }
+                }
+            
+            if canBeExpanded {
+                Button(action: {
+                    withAnimation {
+                        isExpanded.toggle()
+                    }
+                }, label: {
+                    Text(isExpanded ? "Show less" : "Read more")
+                        .fontWeight(.light)
+                        .redacted(reason: redactionReasons)
+                        .underline()
+                })
+            }
+        }
+    }
 }
