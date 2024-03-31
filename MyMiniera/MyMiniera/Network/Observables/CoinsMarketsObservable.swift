@@ -31,9 +31,10 @@ class CoinsMarketsObservable: ObservableObject {
                 case .finished:
                     break
                 }
-        }, receiveValue: { [weak self] coinsList in
-            self?.values = coinsList
-        }).store(in: &cancellables)
+            }, receiveValue: { [weak self] coinsList in
+                self?.values = coinsList
+            })
+            .store(in: &cancellables)
     }
 }
 

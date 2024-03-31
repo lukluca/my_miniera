@@ -33,9 +33,9 @@ class CoinsObservable: ObservableObject {
                 case .finished:
                     break
                 }
-        }, receiveValue: { [weak self] coin in
-            self?.value = coin
-        })
+            }, receiveValue: { [weak self] coin in
+                self?.value = coin
+            })
             .store(in: &cancellables)
     }
 }
