@@ -12,6 +12,8 @@ extension DetailView {
     class ViewModel: ObservableObject {
         
         let coin: CoinMarket
+        let otherCoins: [CoinMarket]
+        let graph: Graph.ViewModel
         
         @Published private var state: State
         
@@ -24,10 +26,12 @@ extension DetailView {
         private var cancellables = Set<AnyCancellable>()
         private let coins = CoinsObservable()
         
-        init(coin: CoinMarket, state: State) {
+        init(coin: CoinMarket, otherCoins: [CoinMarket], state: State) {
             
             self.coin = coin
+            self.otherCoins = otherCoins
             self.state = state
+            self.graph = Graph.ViewModel(coinId: coin.id)
             
             coins.$value
                 .compactMap {$0}
@@ -56,6 +60,10 @@ extension DetailView {
             }
             state = .loading
             coins.fetch(coinId: coin.id)
+        }
+        
+        func fetchGraph() {
+            graph.fetch()
         }
         
         private func apply(state: State) {

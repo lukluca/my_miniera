@@ -36,7 +36,7 @@ struct CoinsView: View {
                 case .successfullyFetched(let models):
                     List(models, id: \.id) { coin in
                         
-                        NavigationLink(destination: DetailView(coin: coin)) {
+                        NavigationLink(destination: DetailView(coin: coin, otherCoins: models.allExcluding(coinId: coin.id))) {
                             Item(coin: coin)
                         }
                         .listRowSeparator(.hidden)

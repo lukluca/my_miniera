@@ -25,6 +25,7 @@ extension CoinsView {
             coinsList.$values
                 .compactMap {$0}
                 .sink { [weak self] list in
+                    self?.errorStare = .initial
                     self?.apply(list: list)
                 }
                 .store(in: &cancellables)
@@ -36,6 +37,8 @@ extension CoinsView {
                     self?.apply(error: error)
                     if let list = self?.coinsList.values {
                         self?.apply(list: list)
+                    } else {
+                        self?.state = .initial
                     }
                 }
                 .store(in: &cancellables)
@@ -73,5 +76,14 @@ extension CoinsView.ViewModel {
         case initial
         case tooManyRequest
         case generalFailure
+    }
+}
+
+extension Array where Element == CoinMarket {
+    
+    func allExcluding(coinId: String) -> Self {
+        var mutable = self
+        mutable.removeAll { $0.id == coinId }
+        return mutable
     }
 }

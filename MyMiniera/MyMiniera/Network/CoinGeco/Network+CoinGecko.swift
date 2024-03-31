@@ -12,14 +12,17 @@ extension Network {
     enum CoinGecko {
         case coins(id: String, parameters: CoinsParameters?)
         case coinsMarkets(parameters: CoinsMarketsParameters)
+        case coinsMarketChart(id: String, parameters: CoinsMarketChartParameters)
     }
 }
 
 extension Network.CoinGecko: Fetchable {
     
+    static let euro = "eur"
+    
     var validStatusCodes: (ClosedRange<Int>) {
         switch self {
-        case .coins, .coinsMarkets:
+        case .coins, .coinsMarkets, .coinsMarketChart:
             (200...200)
         }
     }
@@ -60,6 +63,8 @@ private extension Network.CoinGecko {
             "coins/\(id)"
         case .coinsMarkets:
             "coins/markets"
+        case .coinsMarketChart(let id, _):
+            "coins/\(id)/market_chart"
         }
     }
     
@@ -102,12 +107,25 @@ private extension Network.CoinGecko {
                 items.append(URLQueryItem(name: "page", value: "\(page)"))
             }
             return items
+        case .coinsMarketChart(_, let parameters):
+            var items = [URLQueryItem]()
+            
+            items.append(URLQueryItem(name: "vs_currency", value: parameters.currency))
+            items.append(URLQueryItem(name: "days", value: "\(parameters.days)"))
+            
+            if let interval = parameters.interval {
+                items.append(URLQueryItem(name: "interval", value: interval.rawValue))
+            }
+            if let precision = parameters.precision {
+                items.append(URLQueryItem(name: "precision", value: precision))
+            }
+            return items
         }
     }
     
     var httpMethod: String {
         switch self {
-        case .coins, .coinsMarkets:
+        case .coins, .coinsMarkets, .coinsMarketChart:
             "get"
         }
     }

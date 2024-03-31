@@ -7,13 +7,31 @@
     "*" : {
 
     },
-    "* Percentage calculated with 24 h of tollerance" : {
+    "* Percentage calculated with" : {
+
+    },
+    "24 h" : {
+
+    },
+    "Coin" : {
+
+    },
+    "Compare" : {
 
     },
     "Current price" : {
 
     },
+    "Day" : {
+
+    },
     "Description" : {
+
+    },
+    "Error! No data to show" : {
+
+    },
+    "Graph" : {
 
     },
     "Homepage" : {
@@ -31,7 +49,16 @@
     "My Miniera" : {
 
     },
+    "No data market available!" : {
+
+    },
     "Nothing found!" : {
+
+    },
+    "of tollerance" : {
+
+    },
+    "Price" : {
 
     },
     "Read more" : {

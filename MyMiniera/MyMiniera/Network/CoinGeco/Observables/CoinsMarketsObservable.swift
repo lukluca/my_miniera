@@ -18,7 +18,7 @@ class CoinsMarketsObservable: ObservableObject {
     init() {}
     
     func fetch() {
-        let parameters = CoinsMarketsParameters(currency: "eur",
+        let parameters = CoinsMarketsParameters(currency: Network.CoinGecko.euro,
                                                 order: .marketCapDesc,
                                                 perPage: 10,
                                                 page: 1)

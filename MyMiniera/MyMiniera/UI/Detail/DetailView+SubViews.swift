@@ -91,18 +91,28 @@ extension DetailView {
                     HStack(spacing: 0) {
                         Text("Last updated ")
                             .fontWeight(.ultraLight)
+                            .font(.system(size: 10))
                         Text(coin.lastUpdated.formatted(.relative(presentation: .named, unitsStyle: .wide)))
                             .fontWeight(.light)
+                            .font(.system(size: 10))
                         Text(" at ")
                             .fontWeight(.ultraLight)
+                            .font(.system(size: 10))
                         Text(coin.lastUpdated.formatted())
                             .fontWeight(.light)
+                            .font(.system(size: 10))
                     }
                     
                     HStack {
-                        Text("* Percentage calculated with 24 h of tollerance")
+                        Text("* Percentage calculated with")
                             .fontWeight(.ultraLight)
-                            .fontWidth(.condensed)
+                            .font(.system(size: 10))
+                        Text("24 h")
+                            .fontWeight(.light)
+                            .font(.system(size: 10))
+                        Text("of tollerance")
+                            .fontWeight(.ultraLight)
+                            .font(.system(size: 10))
                     }
                     
                 }

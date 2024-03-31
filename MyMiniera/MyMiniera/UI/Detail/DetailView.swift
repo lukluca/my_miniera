@@ -11,8 +11,13 @@ struct DetailView: View {
     
     @ObservedObject var viewModel: ViewModel
     
-    init(coin: CoinMarket, state: ViewModel.State = .initial) {
-        self.viewModel = ViewModel(coin: coin, state: state)
+    @State private var tooManyRequestHappen = false
+    @State private var failureHappen = false
+    
+    init(coin: CoinMarket,
+         otherCoins: [CoinMarket],
+         state: ViewModel.State = .initial) {
+        self.viewModel = ViewModel(coin: coin, otherCoins: otherCoins, state: state)
     }
     
     var body: some View {
@@ -26,6 +31,20 @@ struct DetailView: View {
                 Section {
                     ErrorView(isTooManyRequest: isTooManyRequest,
                           action: viewModel.fetch)
+                }
+            }
+            
+            if tooManyRequestHappen {
+                Section {
+                    ErrorView(isTooManyRequest: true,
+                          action: viewModel.fetchGraph)
+                }
+            }
+            
+            if failureHappen {
+                Section {
+                    ErrorView(isTooManyRequest: false,
+                          action: viewModel.fetchGraph)
                 }
             }
             
@@ -57,8 +76,23 @@ struct DetailView: View {
                 Text("Market data")
             }
             
+            Section {
+                Graph(viewModel: viewModel.graph,
+                      tooManyRequestHappen: $tooManyRequestHappen,
+                      failureHappen: $failureHappen)
+                    .listRowBackground(viewModel.coin.color)
+            } header: {
+                Text("Graph")
+            }
         }
         .navigationTitle(viewModel.coin.name)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Compare") {
+                    
+                }
+            }
+        }
         .onAppear {
             viewModel.fetch()
         }
@@ -68,21 +102,21 @@ struct DetailView: View {
 // MARK: Preview
 
 #Preview("Initial") {
-    DetailView(coin: .bitcoin, state: .initial)
+    DetailView(coin: .bitcoin, otherCoins: [], state: .initial)
 }
 
 #Preview("Loading") {
-    DetailView(coin: .bitcoin, state: .loading)
+    DetailView(coin: .bitcoin, otherCoins: [], state: .loading)
 }
 
 #Preview("Successfully fetched") {
-    DetailView(coin: .bitcoin, state: .successfullyFetched(.bitcoin))
+    DetailView(coin: .bitcoin, otherCoins: [], state: .successfullyFetched(.bitcoin))
 }
 
 #Preview("Too many request") {
-    DetailView(coin: .bitcoin, state: .tooManyRequest)
+    DetailView(coin: .bitcoin, otherCoins: [], state: .tooManyRequest)
 }
 
 #Preview("Failure") {
-    DetailView(coin: .bitcoin, state: .failure)
+    DetailView(coin: .bitcoin, otherCoins: [], state: .failure)
 }
