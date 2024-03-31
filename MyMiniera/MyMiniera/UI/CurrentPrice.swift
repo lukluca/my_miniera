@@ -17,7 +17,6 @@ struct CurrentPrice: View {
             Text(currentPrice, format: .currency(code: "EUR"))
             BullInfo(viewModel: .init(isBull: isBull))
         }
-
     }
 }
 

@@ -73,7 +73,7 @@ extension DetailView {
                                      isBull: coin.isBull)
                         
                         HStack(spacing: 0) {
-                            Text(coin.priceChangePercentage24h, format: .percent)
+                            Text(coin.percentageChange, format: .percent)
                                 .fontWeight(.ultraLight)
                             Text("*")
                                 .fontWeight(.ultraLight)

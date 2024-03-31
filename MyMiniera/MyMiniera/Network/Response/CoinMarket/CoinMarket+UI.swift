@@ -14,6 +14,10 @@ extension CoinMarket {
     var isBull: Bool {
         priceChangePercentage24h > 0
     }
+    
+    var percentageChange: Double {
+        priceChangePercentage24h / 100
+    }
 }
 
 private extension Color {
