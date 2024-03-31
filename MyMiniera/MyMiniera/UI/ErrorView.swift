@@ -2,7 +2,7 @@
 //  ErrorView.swift
 //  MyMiniera
 //
-//  Created by softwave on 31/03/24.
+//  Created by lukluca on 31/03/24.
 //
 
 import SwiftUI
