@@ -20,6 +20,18 @@ extension CoinMarket {
     }
 }
 
+extension CoinMarket: Identifiable {}
+
+extension CoinMarket: Hashable {
+    static func == (lhs: CoinMarket, rhs: CoinMarket) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 private extension Color {
     static func from(text: String) -> Color {
         var hash = 0

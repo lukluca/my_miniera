@@ -27,24 +27,17 @@ struct DetailView: View {
                 .listRowBackground(Color.clear)
             }
             
-            if let isTooManyRequest = viewModel.isOnTooManyRequestError {
+            if viewModel.isOnTooManyRequestError {
                 Section {
-                    ErrorView(isTooManyRequest: isTooManyRequest,
+                    ErrorView(isTooManyRequest: true,
                           action: viewModel.fetch)
                 }
             }
             
-            if tooManyRequestHappen {
-                Section {
-                    ErrorView(isTooManyRequest: true,
-                          action: viewModel.fetchGraph)
-                }
-            }
-            
-            if failureHappen {
+            if viewModel.isOnFailureError {
                 Section {
                     ErrorView(isTooManyRequest: false,
-                          action: viewModel.fetchGraph)
+                          action: viewModel.fetch)
                 }
             }
             
@@ -87,14 +80,30 @@ struct DetailView: View {
         }
         .navigationTitle(viewModel.coin.name)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Compare") {
-                    
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                if case let .successfullyFetched(coinGraph) = viewModel.graph.state {
+                    NavigationLink(destination: CompareView(viewModel: .init(coin: viewModel.coin,
+                                                                             coinGraph: coinGraph,
+                                                                             otherCoins: viewModel.otherCoins))) {
+                        Text("Compare")
+                    }
                 }
             }
         }
         .onAppear {
             viewModel.fetch()
+        }
+        .onChange(of: tooManyRequestHappen) { (_, value) in
+            viewModel.isOnTooManyRequestError = value
+            if value {
+                viewModel.isOnFailureError = false
+            }
+        }
+        .onChange(of: failureHappen) { (_, value) in
+            viewModel.isOnFailureError = value
+            if value {
+                viewModel.isOnTooManyRequestError = false
+            }
         }
     }
 }
@@ -114,9 +123,9 @@ struct DetailView: View {
 }
 
 #Preview("Too many request") {
-    DetailView(coin: .bitcoin, otherCoins: [], state: .tooManyRequest)
+    DetailView(coin: .bitcoin, otherCoins: [.bitcoin], state: .tooManyRequest)
 }
 
 #Preview("Failure") {
-    DetailView(coin: .bitcoin, otherCoins: [], state: .failure)
+    DetailView(coin: .bitcoin, otherCoins: [.bitcoin], state: .failure)
 }

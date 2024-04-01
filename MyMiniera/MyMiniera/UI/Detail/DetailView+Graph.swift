@@ -31,8 +31,10 @@ extension DetailView {
                         .padding(10)
                 case .noResultsFound:
                     Text("No data market available!")
+                        .padding()
                 case .tooManyRequest, .failure:
                     Text("Error! No data to show")
+                        .padding()
                 }
             }
             .onChange(of: viewModel.state) { (_, state) in
@@ -42,7 +44,8 @@ extension DetailView {
                 case .failure:
                     failureHappen = true
                 default:
-                    break
+                    tooManyRequestHappen = false
+                    failureHappen = false
                 }
             }
             .onAppear {
@@ -167,7 +170,7 @@ extension DetailView.Graph.ViewModel {
                      failureHappen: .constant(false))
 }
 
-private extension CoinMarketChart {
+extension CoinMarketChart {
     
     func priceChartItems(coinId: String) -> GraphView.Item {
         

@@ -17,7 +17,8 @@ extension DetailView {
         
         @Published private var state: State
         
-        @Published var isOnTooManyRequestError: Bool? = nil
+        @Published var isOnTooManyRequestError = false
+        @Published var isOnFailureError = false
         @Published var description: AttributedString = ""
         @Published var homepageText: String = ""
         @Published var homepageURL: URL?
@@ -60,16 +61,20 @@ extension DetailView {
             }
             state = .loading
             coins.fetch(coinId: coin.id)
-        }
-        
-        func fetchGraph() {
-            graph.fetch()
+            
+            switch graph.state {
+            case .failure, .tooManyRequest:
+                graph.fetch()
+            default:
+                break
+            }
         }
         
         private func apply(state: State) {
             switch state {
             case .initial:
-                isOnTooManyRequestError = nil
+                isOnTooManyRequestError = false
+                isOnFailureError = false
                 description = ""
                 homepageText = ""
                 homepageURL = nil
@@ -84,11 +89,13 @@ extension DetailView {
                 redactionReasons = .placeholder
                 
             case .successfullyFetched(let detail):
-                isOnTooManyRequestError = nil
+                isOnTooManyRequestError = false
+                isOnFailureError = false
                 apply(detail: detail)
                 
             case .tooManyRequest:
                 isOnTooManyRequestError = true
+                isOnFailureError = false
                 // user will see latest value
                 if let detail = coins.value {
                     apply(detail: detail)
@@ -96,6 +103,7 @@ extension DetailView {
                 
             case .failure:
                 isOnTooManyRequestError = false
+                isOnFailureError = true
                 // user will see latest value
                 if let detail = coins.value {
                     apply(detail: detail)

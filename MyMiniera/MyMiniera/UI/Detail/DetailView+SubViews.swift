@@ -88,14 +88,14 @@ extension DetailView {
                 }
                 
                 VStack(alignment: .leading)  {
-                    HStack(spacing: 0) {
-                        Text("Last updated ")
+                    HStack(spacing: 4) {
+                        Text("Last updated")
                             .fontWeight(.ultraLight)
                             .font(.system(size: 10))
                         Text(coin.lastUpdated.formatted(.relative(presentation: .named, unitsStyle: .wide)))
                             .fontWeight(.light)
                             .font(.system(size: 10))
-                        Text(" at ")
+                        Text("at")
                             .fontWeight(.ultraLight)
                             .font(.system(size: 10))
                         Text(coin.lastUpdated.formatted())
@@ -103,7 +103,7 @@ extension DetailView {
                             .font(.system(size: 10))
                     }
                     
-                    HStack {
+                    HStack(spacing: 4) {
                         Text("* Percentage calculated with")
                             .fontWeight(.ultraLight)
                             .font(.system(size: 10))

@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    " at " : {
-
-    },
     "*" : {
 
     },
@@ -11,6 +8,9 @@
 
     },
     "24 h" : {
+
+    },
+    "at" : {
 
     },
     "Coin" : {
@@ -37,7 +37,7 @@
     "Homepage" : {
 
     },
-    "Last updated " : {
+    "Last updated" : {
 
     },
     "Market cap" : {
@@ -64,6 +64,9 @@
     "Read more" : {
 
     },
+    "Select coin..." : {
+
+    },
     "Show less" : {
 
     },
@@ -71,6 +74,9 @@
 
     },
     "Too many request, please retry later!" : {
+
+    },
+    "with" : {
 
     }
   },
