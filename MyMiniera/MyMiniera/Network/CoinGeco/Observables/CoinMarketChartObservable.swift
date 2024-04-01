@@ -19,7 +19,7 @@ class CoinMarketChartObservable: ObservableObject {
     
     func fetch(coinId: String) {
         let parameters = CoinsMarketChartParameters(currency: Network.CoinGecko.euro,
-                                                    days: 6,
+                                                    days: 7,
                                                     interval: .daily,
                                                     precision: nil)
         Network.CoinGecko.coinsMarketChart(id: coinId, parameters: parameters).fetch()
