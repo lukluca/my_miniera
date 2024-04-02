@@ -124,7 +124,7 @@ extension DetailView {
 // MARK: Preview
 
 #Preview("Image") {
-    DetailView.Image(url: .imagePreview)
+    DetailView.Image(url: .bitcoinImagePreview)
 }
 
 #Preview("Loading description") {
@@ -140,11 +140,11 @@ extension DetailView {
 }
 
 #Preview("Loading homepage") {
-    DetailView.Homepage(redactionReasons: .placeholder, linkText: "loading", linkURL: .homepagePreview)
+    DetailView.Homepage(redactionReasons: .placeholder, linkText: "loading", linkURL: .bitcoinHomepagePreview)
 }
 
 #Preview("Homepage") {
-    DetailView.Homepage(redactionReasons: .invalidated, linkText: "www.home.com", linkURL: .homepagePreview)
+    DetailView.Homepage(redactionReasons: .invalidated, linkText: "www.home.com", linkURL: .bitcoinHomepagePreview)
 }
 
 #Preview("MarketData") {

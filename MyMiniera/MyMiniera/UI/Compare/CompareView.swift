@@ -30,15 +30,13 @@ struct CompareView: View {
                         Text($0.name).tag($0.name)
                     }
                 }
-                
-                
             }
             
             switch viewModel.state {
             case .initial:
                 Spacer()
             case .loading:
-                GraphView(data: [])
+                GraphView(data: [.loading])
                     .redacted(reason: .placeholder)
             case .successfullyFetched(let marketData):
                 GraphView(data: [viewModel.coinGraph, marketData])
@@ -47,19 +45,14 @@ struct CompareView: View {
                 Spacer()
                 Text("No data market available!")
                 Spacer()
-            case .tooManyRequest:
-                Spacer()
-                ErrorView(isTooManyRequest: true, action: {
-                    viewModel.fetch(name: selectedCoin)
-                })
-                Spacer()
-            case .failure:
-                Spacer()
-                ErrorView(isTooManyRequest: false, action: {
-                    viewModel.fetch(name: selectedCoin)
-                })
-                Spacer()
             }
+            
+            Spacer(minLength: viewModel.errorState == .hidden ? 0 : nil)
+            ErrorView(state: $viewModel.errorState) {
+                viewModel.fetch(name: selectedCoin)
+            }
+            Spacer(minLength: viewModel.errorState == .hidden ? 0 : nil)
+            
         }
         .navigationTitle("Compare")
         .onChange(of: selectedCoin) { (_, selected) in
@@ -77,6 +70,7 @@ extension CompareView {
         private var otherSelectedCoin: String = ""
         
         @Published var state: State
+        @Published var errorState: ErrorView.State
         
         private var cancellables = Set<AnyCancellable>()
         private let coinsMarkets = CoinMarketChartObservable()
@@ -84,11 +78,13 @@ extension CompareView {
         init(coin: CoinMarket, 
              coinGraph: GraphView.Item,
              otherCoins: [CoinMarket],
-             state: State = .initial) {
+             state: State = .initial,
+             errorState: ErrorView.State = .hidden) {
             self.coin = coin
             self.coinGraph = coinGraph
             self.otherCoins = otherCoins
             self.state = state
+            self.errorState = errorState
             
             coinsMarkets.$value
                 .compactMap {$0}
@@ -106,7 +102,7 @@ extension CompareView {
                 .compactMap {$0}
                 .sink { [weak self] error in
                     debugPrint(error.localizedDescription)
-                    self?.state = error.isTooManyRequest ? .tooManyRequest : .failure
+                    self?.errorState = error.isTooManyRequest ? .tooManyRequest : .generalFailure
                 }
                 .store(in: &cancellables)
         }
@@ -125,6 +121,7 @@ extension CompareView {
             otherSelectedCoin = selected.id
             
             state = .loading
+            errorState = .hidden
             coinsMarkets.fetch(coinId: selected.id)
         }
     }
@@ -138,8 +135,6 @@ extension CompareView.ViewModel {
         case loading
         case successfullyFetched(GraphView.Item)
         case noResultsFound
-        case tooManyRequest
-        case failure
     }
 }
 
@@ -147,42 +142,47 @@ extension CompareView.ViewModel {
 
 #Preview("Initial") {
     CompareView(viewModel: .init(coin: .bitcoin,
-                                 coinGraph: CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"),
-                                 otherCoins: [.bitcoin],
+                                 coinGraph: .bitcoinPreview,
+                                 otherCoins: [.ethereum],
                                  state: .initial))
 }
 
 #Preview("Loading") {
     CompareView(viewModel: .init(coin: .bitcoin,
-                                 coinGraph: CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"),
-                                 otherCoins: [.bitcoin],
-                                 state: .loading))
+                                 coinGraph: .bitcoinPreview,
+                                 otherCoins: [.ethereum],
+                                 state: .loading,
+                                 errorState: .hidden))
 }
 
 #Preview("Success") {
     CompareView(viewModel: .init(coin: .bitcoin,
-                                 coinGraph: CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"),
-                                 otherCoins: [.bitcoin],
-                                 state: .successfullyFetched(GraphView.Item(coinId: "ethereum", prices: []))))
+                                 coinGraph: .bitcoinPreview,
+                                 otherCoins: [.ethereum],
+                                 state: .successfullyFetched(.ethereumPreview),
+                                 errorState: .hidden))
 }
 
 #Preview("No data") {
     CompareView(viewModel: .init(coin: .bitcoin,
-                                 coinGraph: CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"),
-                                 otherCoins: [.bitcoin],
-                                 state: .noResultsFound))
+                                 coinGraph: .bitcoinPreview,
+                                 otherCoins: [.ethereum],
+                                 state: .noResultsFound,
+                                 errorState: .hidden))
 }
 
 #Preview("Too many request") {
     CompareView(viewModel: .init(coin: .bitcoin,
-                                 coinGraph: CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"),
-                                 otherCoins: [.bitcoin],
-                                 state: .tooManyRequest))
+                                 coinGraph: .bitcoinPreview,
+                                 otherCoins: [.ethereum],
+                                 state: .initial,
+                                 errorState: .tooManyRequest))
 }
 
 #Preview("Failure") {
     CompareView(viewModel: .init(coin: .bitcoin,
-                                 coinGraph: CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"),
-                                 otherCoins: [.bitcoin],
-                                 state: .failure))
+                                 coinGraph: .bitcoinPreview,
+                                 otherCoins: [.ethereum],
+                                 state: .initial,
+                                 errorState: .generalFailure))
 }

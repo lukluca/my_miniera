@@ -11,13 +11,14 @@ struct DetailView: View {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var tooManyRequestHappen = false
-    @State private var failureHappen = false
-    
     init(coin: CoinMarket,
          otherCoins: [CoinMarket],
-         state: ViewModel.State = .initial) {
-        self.viewModel = ViewModel(coin: coin, otherCoins: otherCoins, state: state)
+         state: ViewModel.State = .initial,
+         errorState: ErrorView.State = .hidden) {
+        self.viewModel = ViewModel(coin: coin,
+                                   otherCoins: otherCoins,
+                                   state: state,
+                                   errorState: errorState)
     }
     
     var body: some View {
@@ -27,18 +28,8 @@ struct DetailView: View {
                 .listRowBackground(Color.clear)
             }
             
-            if viewModel.isOnTooManyRequestError {
-                Section {
-                    ErrorView(isTooManyRequest: true,
-                          action: viewModel.fetch)
-                }
-            }
-            
-            if viewModel.isOnFailureError {
-                Section {
-                    ErrorView(isTooManyRequest: false,
-                          action: viewModel.fetch)
-                }
+            Section {
+                ErrorView(state: $viewModel.errorState, action: viewModel.fetch)
             }
             
             Section {
@@ -70,9 +61,7 @@ struct DetailView: View {
             }
             
             Section {
-                Graph(viewModel: viewModel.graph,
-                      tooManyRequestHappen: $tooManyRequestHappen,
-                      failureHappen: $failureHappen)
+                Graph(viewModel: viewModel.graph)
                     .listRowBackground(viewModel.coin.color)
             } header: {
                 Text("Graph")
@@ -93,18 +82,6 @@ struct DetailView: View {
         .onAppear {
             viewModel.fetch()
         }
-        .onChange(of: tooManyRequestHappen) { (_, value) in
-            viewModel.isOnTooManyRequestError = value
-            if value {
-                viewModel.isOnFailureError = false
-            }
-        }
-        .onChange(of: failureHappen) { (_, value) in
-            viewModel.isOnFailureError = value
-            if value {
-                viewModel.isOnTooManyRequestError = false
-            }
-        }
     }
 }
 
@@ -123,9 +100,13 @@ struct DetailView: View {
 }
 
 #Preview("Too many request") {
-    DetailView(coin: .bitcoin, otherCoins: [.bitcoin], state: .tooManyRequest)
+    DetailView(coin: .bitcoin, otherCoins: [.bitcoin], 
+               state: .initial,
+               errorState: .tooManyRequest)
 }
 
 #Preview("Failure") {
-    DetailView(coin: .bitcoin, otherCoins: [.bitcoin], state: .failure)
+    DetailView(coin: .bitcoin, otherCoins: [.bitcoin], 
+               state: .initial,
+               errorState: .generalFailure)
 }

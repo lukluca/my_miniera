@@ -12,20 +12,20 @@ extension CoinsView {
     class ViewModel: ObservableObject {
         
         @Published var state: State
-        @Published var errorStare: ErrorState
+        @Published var errorState: ErrorView.State
         
         private var cancellables = Set<AnyCancellable>()
         private let coinsList = CoinsMarketsObservable()
         
-        init(state: State = .initial, errorState: ErrorState = .initial) {
+        init(state: State = .initial, errorState: ErrorView.State = .hidden) {
             
             self.state = state
-            self.errorStare = errorState
-            
+            self.errorState = errorState
+           
             coinsList.$values
                 .compactMap {$0}
                 .sink { [weak self] list in
-                    self?.errorStare = .initial
+                    self?.errorState = .hidden
                     self?.apply(list: list)
                 }
                 .store(in: &cancellables)
@@ -49,7 +49,7 @@ extension CoinsView {
                 return
             }
             state = .loading
-            errorStare = .initial
+            errorState = .hidden
             coinsList.fetch()
         }
         
@@ -58,7 +58,7 @@ extension CoinsView {
         }
         
         private func apply(error: Error) {
-            errorStare = error.isTooManyRequest ? .tooManyRequest : .generalFailure
+            errorState = error.isTooManyRequest ? .tooManyRequest : .generalFailure
         }
     }
 }

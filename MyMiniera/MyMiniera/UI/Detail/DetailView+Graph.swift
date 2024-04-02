@@ -14,9 +14,6 @@ extension DetailView {
         
         @ObservedObject var viewModel: ViewModel
         
-        @Binding var tooManyRequestHappen: Bool
-        @Binding var failureHappen: Bool
-        
         var body: some View {
             
             VStack {
@@ -24,7 +21,7 @@ extension DetailView {
                 case .initial:
                     EmptyView()
                 case .loading:
-                    GraphView(data: [])
+                    GraphView(data: [.loading])
                         .redacted(reason: .placeholder)
                 case .successfullyFetched(let marketData):
                     GraphView(data: [marketData])
@@ -32,24 +29,7 @@ extension DetailView {
                 case .noResultsFound:
                     Text("No data market available!")
                         .padding()
-                case .tooManyRequest, .failure:
-                    Text("Error! No data to show")
-                        .padding()
                 }
-            }
-            .onChange(of: viewModel.state) { (_, state) in
-                switch state {
-                case .tooManyRequest:
-                    tooManyRequestHappen = true
-                case .failure:
-                    failureHappen = true
-                default:
-                    tooManyRequestHappen = false
-                    failureHappen = false
-                }
-            }
-            .onAppear {
-                viewModel.fetch()
             }
         }
     }
@@ -61,20 +41,23 @@ extension DetailView.Graph {
         let coinId: String
         
         @Published var state: State
+        @Published var errorState: ErrorView.State
     
         private var cancellables = Set<AnyCancellable>()
         private let coinsMarkets = CoinMarketChartObservable()
         
-        init(coinId: String, state: State = .initial) {
+        init(coinId: String, 
+             state: State = .initial,
+             errorState: ErrorView.State = .hidden) {
             
             self.coinId = coinId
             self.state = state
+            self.errorState = errorState
             
             coinsMarkets.$value
                 .compactMap {$0}
                 .sink { [weak self] marketDatas in
-                    
-                    self?.state = marketDatas.areAllPricesEmpty ? .noResultsFound : .successfullyFetched(marketDatas.priceChartItems(coinId: coinId))
+                    self?.apply(marketDatas: marketDatas)
                 }
                 .store(in: &cancellables)
             
@@ -82,7 +65,7 @@ extension DetailView.Graph {
                 .compactMap {$0}
                 .sink { [weak self] error in
                     debugPrint(error.localizedDescription)
-                    self?.state = error.isTooManyRequest ? .tooManyRequest : .failure
+                    self?.errorState = error.isTooManyRequest ? .tooManyRequest : .generalFailure
                 }
                 .store(in: &cancellables)
         }
@@ -92,82 +75,56 @@ extension DetailView.Graph {
                 return
             }
             state = .loading
+            errorState = .hidden
             coinsMarkets.fetch(coinId: coinId)
+        }
+        
+        private func apply(marketDatas: CoinMarketChart) {
+            state = marketDatas.areAllPricesEmpty ? .noResultsFound : .successfullyFetched(marketDatas.priceChartItems(coinId: coinId))
         }
     }
 }
 
 // MARK: State
 extension DetailView.Graph.ViewModel {
-    enum State: Equatable {
+    enum State {
         case initial
         case loading
         case successfullyFetched(GraphView.Item)
         case noResultsFound
-        case tooManyRequest
-        case failure
-        
-        static func == (lhs: State, rhs: State) -> Bool {
-            switch (lhs, rhs) {
-            case (.initial, .initial):
-                true
-            case (.loading, .loading):
-                true
-            case (.successfullyFetched, .successfullyFetched):
-                true
-            case (.noResultsFound, .noResultsFound):
-                true
-            case (.tooManyRequest, .tooManyRequest):
-                true
-            case (.failure, .failure):
-                true
-            default:
-                false
-            }
-        }
     }
 }
 
 // MARK: Preview
 
 #Preview("Initial") {
-    DetailView.Graph(viewModel: .init(coinId: "bitcoin", state: .initial),
-                     tooManyRequestHappen: .constant(false),
-                     failureHappen: .constant(false))
+    DetailView.Graph(viewModel: .init(coinId: "bitcoin", state: .initial))
 }
 
 #Preview("Loading") {
-    DetailView.Graph(viewModel: .init(coinId: "bitcoin", state: .loading),
-                     tooManyRequestHappen: .constant(false),
-                     failureHappen: .constant(false))
+    DetailView.Graph(viewModel: .init(coinId: "bitcoin", state: .loading))
 }
 
 #Preview("Successfully fetched") {
     DetailView.Graph(viewModel: .init(coinId: "bitcoin",
-                                      state: .successfullyFetched(CoinMarketChart.preview.priceChartItems(coinId: "bitcoin"))),
-                     tooManyRequestHappen: .constant(false),
-                     failureHappen: .constant(false))
+                                      state: .successfullyFetched(.bitcoinPreview)))
 }
 
 #Preview("No results found") {
     DetailView.Graph(viewModel: .init(coinId: "bitcoin",
-                                      state: .noResultsFound),
-                     tooManyRequestHappen: .constant(false),
-                     failureHappen: .constant(false))
+                                      state: .noResultsFound))
 }
 
 #Preview("Too many request") {
     DetailView.Graph(viewModel: .init(coinId: "bitcoin",
-                                      state: .tooManyRequest),
-                     tooManyRequestHappen: .constant(false),
-                     failureHappen: .constant(false))
+                                      state: .initial,
+                                      errorState: .tooManyRequest))
 }
 
-#Preview("Failure") {
+#Preview("General Failure") {
     DetailView.Graph(viewModel: .init(coinId: "bitcoin",
-                                      state: .failure),
-                     tooManyRequestHappen: .constant(false),
-                     failureHappen: .constant(false))
+                                      state: .initial,
+                                      errorState: .generalFailure))
 }
 
 extension CoinMarketChart {

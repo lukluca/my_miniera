@@ -38,3 +38,7 @@ extension GraphView {
         var id: String { coinId }
     }
 }
+
+extension GraphView.Item {
+    static let loading = Self.init(coinId: "loading", prices: [(day: Date(), price: 12345)])
+}

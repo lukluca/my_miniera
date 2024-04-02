@@ -9,16 +9,19 @@ import SwiftUI
 
 struct ErrorView: View {
     
-    let isTooManyRequest: Bool
+    @Binding var state: ErrorView.State
     let action: () -> Void
     
     var body: some View {
-        if isTooManyRequest {
+        switch state {
+        case .hidden:
+            EmptyView()
+        case .tooManyRequest:
             Button(action: action) {
                 Text("Too many request, please retry later!")
                     .foregroundColor(.red)
             }
-        } else {
+        case .generalFailure:
             Button(action: action) {
                 Text("Something went wrong, please retry!")
                     .foregroundColor(.red)
@@ -27,10 +30,22 @@ struct ErrorView: View {
     }
 }
 
-#Preview("Error too many request") {
-    ErrorView(isTooManyRequest: true, action: {})
+extension ErrorView {
+    enum State {
+        case hidden
+        case tooManyRequest
+        case generalFailure
+    }
 }
 
-#Preview("General error") {
-    ErrorView(isTooManyRequest: false, action: {})
+#Preview("Hidden") {
+    ErrorView(state: .constant(.hidden), action: {})
+}
+
+#Preview("Error too many request") {
+    ErrorView(state: .constant(.tooManyRequest), action: {})
+}
+
+#Preview("General failure") {
+    ErrorView(state: .constant(.generalFailure), action: {})
 }

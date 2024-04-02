@@ -16,9 +16,8 @@ extension DetailView {
         let graph: Graph.ViewModel
         
         @Published private var state: State
-        
-        @Published var isOnTooManyRequestError = false
-        @Published var isOnFailureError = false
+   
+        @Published var errorState: ErrorView.State
         @Published var description: AttributedString = ""
         @Published var homepageText: String = ""
         @Published var homepageURL: URL?
@@ -27,12 +26,16 @@ extension DetailView {
         private var cancellables = Set<AnyCancellable>()
         private let coins = CoinsObservable()
         
-        init(coin: CoinMarket, otherCoins: [CoinMarket], state: State) {
+        init(coin: CoinMarket, 
+             otherCoins: [CoinMarket],
+             state: State,
+             errorState: ErrorView.State) {
             
             self.coin = coin
             self.otherCoins = otherCoins
             self.state = state
             self.graph = Graph.ViewModel(coinId: coin.id)
+            self.errorState = errorState
             
             coins.$value
                 .compactMap {$0}
@@ -43,10 +46,12 @@ extension DetailView {
             
             coins.$error
                 .compactMap {$0}
-                .sink { [weak self] error in
+                .map { error -> ErrorView.State in
                     debugPrint(error.localizedDescription)
-                    self?.state = error.isTooManyRequest ? .tooManyRequest : .failure
+                    return error.isTooManyRequest ? .tooManyRequest : .generalFailure
                 }
+                .merge(with: graph.$errorState)
+                .assign(to: \.errorState, on: self)
                 .store(in: &cancellables)
             
             $state.sink { [weak self] state in
@@ -59,11 +64,19 @@ extension DetailView {
             guard !ProcessInfo.isOnPreview() else {
                 return
             }
-            state = .loading
-            coins.fetch(coinId: coin.id)
             
-            switch graph.state {
-            case .failure, .tooManyRequest:
+            if coins.value == nil || coins.error != nil {
+                state = .loading
+                errorState = .hidden
+                coins.fetch(coinId: coin.id)
+            }
+            
+            switch (graph.errorState, graph.state) {
+            case (.tooManyRequest, _):
+                graph.fetch()
+            case (.generalFailure, _):
+                graph.fetch()
+            case (_, .initial):
                 graph.fetch()
             default:
                 break
@@ -73,8 +86,6 @@ extension DetailView {
         private func apply(state: State) {
             switch state {
             case .initial:
-                isOnTooManyRequestError = false
-                isOnFailureError = false
                 description = ""
                 homepageText = ""
                 homepageURL = nil
@@ -89,25 +100,7 @@ extension DetailView {
                 redactionReasons = .placeholder
                 
             case .successfullyFetched(let detail):
-                isOnTooManyRequestError = false
-                isOnFailureError = false
                 apply(detail: detail)
-                
-            case .tooManyRequest:
-                isOnTooManyRequestError = true
-                isOnFailureError = false
-                // user will see latest value
-                if let detail = coins.value {
-                    apply(detail: detail)
-                }
-                
-            case .failure:
-                isOnTooManyRequestError = false
-                isOnFailureError = true
-                // user will see latest value
-                if let detail = coins.value {
-                    apply(detail: detail)
-                }
             }
         }
         
@@ -130,7 +123,5 @@ extension DetailView.ViewModel {
         case initial
         case loading
         case successfullyFetched(Coin)
-        case tooManyRequest
-        case failure
     }
 }

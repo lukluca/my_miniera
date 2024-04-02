@@ -19,14 +19,8 @@ struct CoinsView: View {
         NavigationView {
             VStack(spacing: 20) {
                 
-                switch viewModel.errorStare {
-                case .initial:
-                    EmptyView()
-                case .tooManyRequest:
-                    ErrorView(isTooManyRequest: true, action: viewModel.fetch)
-                case .generalFailure:
-                    ErrorView(isTooManyRequest: false, action: viewModel.fetch)
-                }
+                ErrorView(state: $viewModel.errorState,
+                          action: viewModel.fetch)
                 
                 switch viewModel.state {
                 case .initial:
@@ -103,7 +97,7 @@ extension CoinsView {
 // MARK: Preview
 
 #Preview("Initial") {
-    CoinsView(viewModel: .init(state: .initial, errorState: .initial))
+    CoinsView(viewModel: .init(state: .initial, errorState: .hidden))
 }
 
 #Preview("Loading") {
