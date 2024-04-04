@@ -1,0 +1,541 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4A457E1A2BB4C92B00D99B49 /* MyMinieraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A457E192BB4C92B00D99B49 /* MyMinieraApp.swift */; };
+		4A457E1C2BB4C92B00D99B49 /* CoinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A457E1B2BB4C92B00D99B49 /* CoinsView.swift */; };
+		4A457E1E2BB4C92D00D99B49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A457E1D2BB4C92D00D99B49 /* Assets.xcassets */; };
+		4A457E212BB4C92D00D99B49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A457E202BB4C92D00D99B49 /* Preview Assets.xcassets */; };
+		4A457E292BB4CA3900D99B49 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A457E282BB4CA3900D99B49 /* Network.swift */; };
+		4A457E2B2BB4CB5F00D99B49 /* Network+CoinGecko.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A457E2A2BB4CB5F00D99B49 /* Network+CoinGecko.swift */; };
+		4AA624C42BB5BF69003E53AE /* CoinsParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA624C32BB5BF69003E53AE /* CoinsParameters.swift */; };
+		4AA624C62BB5C14A003E53AE /* CoinsObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA624C52BB5C14A003E53AE /* CoinsObservable.swift */; };
+		4AA625172BB5CBAD003E53AE /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625162BB5CBAD003E53AE /* Coin.swift */; };
+		4AA6251C2BB615CA003E53AE /* CoinsMarketsObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6251B2BB615CA003E53AE /* CoinsMarketsObservable.swift */; };
+		4AA6251E2BB61604003E53AE /*  CoinMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6251D2BB61604003E53AE /*  CoinMarket.swift */; };
+		4AA625202BB61AF2003E53AE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4AA6251F2BB61AF2003E53AE /* Localizable.xcstrings */; };
+		4AA625222BB62E0A003E53AE /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625212BB62E0A003E53AE /* DetailView.swift */; };
+		4AA625242BB6C300003E53AE /* CoinsMarketsParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625232BB6C300003E53AE /* CoinsMarketsParameters.swift */; };
+		4AA625272BB6C41D003E53AE /* CoinMarket+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625262BB6C41D003E53AE /* CoinMarket+UI.swift */; };
+		4AA6252C2BB9770A003E53AE /* CurrentPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6252B2BB9770A003E53AE /* CurrentPrice.swift */; };
+		4AA6252F2BB98A5A003E53AE /* MockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6252D2BB98996003E53AE /* MockModels.swift */; };
+		4AA625322BB990A9003E53AE /* Error+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625312BB990A9003E53AE /* Error+UI.swift */; };
+		4AA625342BB9919A003E53AE /* ProcessInfo+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625332BB9919A003E53AE /* ProcessInfo+Preview.swift */; };
+		4AA625372BB9C24C003E53AE /* DetailView+SubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625362BB9C24C003E53AE /* DetailView+SubViews.swift */; };
+		4AA625392BB9C299003E53AE /* DetailView+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625382BB9C299003E53AE /* DetailView+Model.swift */; };
+		4AA6253D2BB9C948003E53AE /* String+AttributedHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6253C2BB9C948003E53AE /* String+AttributedHTML.swift */; };
+		4AA6253F2BB9EB3E003E53AE /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6253E2BB9EB3E003E53AE /* ErrorView.swift */; };
+		4AA625422BB9F885003E53AE /* CoinsView+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625412BB9F885003E53AE /* CoinsView+Model.swift */; };
+		4AA625452BBA0D15003E53AE /* CoinsMarketChartParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625442BBA0D15003E53AE /* CoinsMarketChartParameters.swift */; };
+		4AA625472BBA0EA9003E53AE /* CoinMarketChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625462BBA0EA9003E53AE /* CoinMarketChart.swift */; };
+		4AA625492BBA0F68003E53AE /* CoinMarketChartObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA625482BBA0F68003E53AE /* CoinMarketChartObservable.swift */; };
+		4AA6254B2BBA105B003E53AE /* DetailView+Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6254A2BBA105B003E53AE /* DetailView+Graph.swift */; };
+		4AA6254D2BBA2C99003E53AE /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6254C2BBA2C99003E53AE /* GraphView.swift */; };
+		4AA625502BBA2D87003E53AE /* CompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6254F2BBA2D87003E53AE /* CompareView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4A457E162BB4C92B00D99B49 /* MyMiniera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyMiniera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A457E192BB4C92B00D99B49 /* MyMinieraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMinieraApp.swift; sourceTree = "<group>"; };
+		4A457E1B2BB4C92B00D99B49 /* CoinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsView.swift; sourceTree = "<group>"; };
+		4A457E1D2BB4C92D00D99B49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4A457E202BB4C92D00D99B49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4A457E282BB4CA3900D99B49 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		4A457E2A2BB4CB5F00D99B49 /* Network+CoinGecko.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network+CoinGecko.swift"; sourceTree = "<group>"; };
+		4AA624C32BB5BF69003E53AE /* CoinsParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsParameters.swift; sourceTree = "<group>"; };
+		4AA624C52BB5C14A003E53AE /* CoinsObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsObservable.swift; sourceTree = "<group>"; };
+		4AA625162BB5CBAD003E53AE /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		4AA6251B2BB615CA003E53AE /* CoinsMarketsObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsMarketsObservable.swift; sourceTree = "<group>"; };
+		4AA6251D2BB61604003E53AE /*  CoinMarket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " CoinMarket.swift"; sourceTree = "<group>"; };
+		4AA6251F2BB61AF2003E53AE /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		4AA625212BB62E0A003E53AE /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		4AA625232BB6C300003E53AE /* CoinsMarketsParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsMarketsParameters.swift; sourceTree = "<group>"; };
+		4AA625262BB6C41D003E53AE /* CoinMarket+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoinMarket+UI.swift"; sourceTree = "<group>"; };
+		4AA6252B2BB9770A003E53AE /* CurrentPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPrice.swift; sourceTree = "<group>"; };
+		4AA6252D2BB98996003E53AE /* MockModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockModels.swift; sourceTree = "<group>"; };
+		4AA625312BB990A9003E53AE /* Error+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+UI.swift"; sourceTree = "<group>"; };
+		4AA625332BB9919A003E53AE /* ProcessInfo+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+Preview.swift"; sourceTree = "<group>"; };
+		4AA625362BB9C24C003E53AE /* DetailView+SubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailView+SubViews.swift"; sourceTree = "<group>"; };
+		4AA625382BB9C299003E53AE /* DetailView+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailView+Model.swift"; sourceTree = "<group>"; };
+		4AA6253C2BB9C948003E53AE /* String+AttributedHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AttributedHTML.swift"; sourceTree = "<group>"; };
+		4AA6253E2BB9EB3E003E53AE /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		4AA625412BB9F885003E53AE /* CoinsView+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoinsView+Model.swift"; sourceTree = "<group>"; };
+		4AA625442BBA0D15003E53AE /* CoinsMarketChartParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsMarketChartParameters.swift; sourceTree = "<group>"; };
+		4AA625462BBA0EA9003E53AE /* CoinMarketChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketChart.swift; sourceTree = "<group>"; };
+		4AA625482BBA0F68003E53AE /* CoinMarketChartObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketChartObservable.swift; sourceTree = "<group>"; };
+		4AA6254A2BBA105B003E53AE /* DetailView+Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailView+Graph.swift"; sourceTree = "<group>"; };
+		4AA6254C2BBA2C99003E53AE /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		4AA6254F2BBA2D87003E53AE /* CompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A457E132BB4C92B00D99B49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A457E0D2BB4C92B00D99B49 = {
+			isa = PBXGroup;
+			children = (
+				4A457E182BB4C92B00D99B49 /* MyMiniera */,
+				4A457E172BB4C92B00D99B49 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4A457E172BB4C92B00D99B49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A457E162BB4C92B00D99B49 /* MyMiniera.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A457E182BB4C92B00D99B49 /* MyMiniera */ = {
+			isa = PBXGroup;
+			children = (
+				4A457E192BB4C92B00D99B49 /* MyMinieraApp.swift */,
+				4A457E1D2BB4C92D00D99B49 /* Assets.xcassets */,
+				4AA6251F2BB61AF2003E53AE /* Localizable.xcstrings */,
+				4AA625302BB9908D003E53AE /* Extensions */,
+				4A457E272BB4C94100D99B49 /* Network */,
+				4A457E1F2BB4C92D00D99B49 /* Preview Content */,
+				4AA625282BB6C478003E53AE /* UI */,
+			);
+			path = MyMiniera;
+			sourceTree = "<group>";
+		};
+		4A457E1F2BB4C92D00D99B49 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				4A457E202BB4C92D00D99B49 /* Preview Assets.xcassets */,
+				4AA6252D2BB98996003E53AE /* MockModels.swift */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4A457E272BB4C94100D99B49 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4AA625432BBA0CCF003E53AE /* CoinGeco */,
+				4A457E282BB4CA3900D99B49 /* Network.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		4A457E2C2BB4D26400D99B49 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				4AA625252BB6C408003E53AE /* CoinMarket */,
+				4AA625162BB5CBAD003E53AE /* Coin.swift */,
+				4AA625462BBA0EA9003E53AE /* CoinMarketChart.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		4A457E2F2BB4D77500D99B49 /* Observables */ = {
+			isa = PBXGroup;
+			children = (
+				4AA624C52BB5C14A003E53AE /* CoinsObservable.swift */,
+				4AA6251B2BB615CA003E53AE /* CoinsMarketsObservable.swift */,
+				4AA625482BBA0F68003E53AE /* CoinMarketChartObservable.swift */,
+			);
+			path = Observables;
+			sourceTree = "<group>";
+		};
+		4AA624C22BB5BDD9003E53AE /* Paramerers */ = {
+			isa = PBXGroup;
+			children = (
+				4AA624C32BB5BF69003E53AE /* CoinsParameters.swift */,
+				4AA625232BB6C300003E53AE /* CoinsMarketsParameters.swift */,
+				4AA625442BBA0D15003E53AE /* CoinsMarketChartParameters.swift */,
+			);
+			path = Paramerers;
+			sourceTree = "<group>";
+		};
+		4AA625252BB6C408003E53AE /* CoinMarket */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6251D2BB61604003E53AE /*  CoinMarket.swift */,
+				4AA625262BB6C41D003E53AE /* CoinMarket+UI.swift */,
+			);
+			path = CoinMarket;
+			sourceTree = "<group>";
+		};
+		4AA625282BB6C478003E53AE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6254E2BBA2D7D003E53AE /* Compare */,
+				4AA625402BB9F868003E53AE /* Coins */,
+				4AA625352BB9C233003E53AE /* Detail */,
+				4AA6252B2BB9770A003E53AE /* CurrentPrice.swift */,
+				4AA6253E2BB9EB3E003E53AE /* ErrorView.swift */,
+				4AA6254C2BBA2C99003E53AE /* GraphView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		4AA625302BB9908D003E53AE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4AA625312BB990A9003E53AE /* Error+UI.swift */,
+				4AA625332BB9919A003E53AE /* ProcessInfo+Preview.swift */,
+				4AA6253C2BB9C948003E53AE /* String+AttributedHTML.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4AA625352BB9C233003E53AE /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				4AA625212BB62E0A003E53AE /* DetailView.swift */,
+				4AA625362BB9C24C003E53AE /* DetailView+SubViews.swift */,
+				4AA625382BB9C299003E53AE /* DetailView+Model.swift */,
+				4AA6254A2BBA105B003E53AE /* DetailView+Graph.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		4AA625402BB9F868003E53AE /* Coins */ = {
+			isa = PBXGroup;
+			children = (
+				4A457E1B2BB4C92B00D99B49 /* CoinsView.swift */,
+				4AA625412BB9F885003E53AE /* CoinsView+Model.swift */,
+			);
+			path = Coins;
+			sourceTree = "<group>";
+		};
+		4AA625432BBA0CCF003E53AE /* CoinGeco */ = {
+			isa = PBXGroup;
+			children = (
+				4A457E2A2BB4CB5F00D99B49 /* Network+CoinGecko.swift */,
+				4A457E2F2BB4D77500D99B49 /* Observables */,
+				4AA624C22BB5BDD9003E53AE /* Paramerers */,
+				4A457E2C2BB4D26400D99B49 /* Response */,
+			);
+			path = CoinGeco;
+			sourceTree = "<group>";
+		};
+		4AA6254E2BBA2D7D003E53AE /* Compare */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6254F2BBA2D87003E53AE /* CompareView.swift */,
+			);
+			path = Compare;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A457E152BB4C92B00D99B49 /* MyMiniera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A457E242BB4C92D00D99B49 /* Build configuration list for PBXNativeTarget "MyMiniera" */;
+			buildPhases = (
+				4A457E122BB4C92B00D99B49 /* Sources */,
+				4A457E132BB4C92B00D99B49 /* Frameworks */,
+				4A457E142BB4C92B00D99B49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyMiniera;
+			productName = MyMiniera;
+			productReference = 4A457E162BB4C92B00D99B49 /* MyMiniera.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A457E0E2BB4C92B00D99B49 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					4A457E152BB4C92B00D99B49 = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = 4A457E112BB4C92B00D99B49 /* Build configuration list for PBXProject "MyMiniera" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4A457E0D2BB4C92B00D99B49;
+			productRefGroup = 4A457E172BB4C92B00D99B49 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A457E152BB4C92B00D99B49 /* MyMiniera */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4A457E142BB4C92B00D99B49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A457E212BB4C92D00D99B49 /* Preview Assets.xcassets in Resources */,
+				4A457E1E2BB4C92D00D99B49 /* Assets.xcassets in Resources */,
+				4AA625202BB61AF2003E53AE /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A457E122BB4C92B00D99B49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A457E1C2BB4C92B00D99B49 /* CoinsView.swift in Sources */,
+				4AA625472BBA0EA9003E53AE /* CoinMarketChart.swift in Sources */,
+				4AA625392BB9C299003E53AE /* DetailView+Model.swift in Sources */,
+				4AA625222BB62E0A003E53AE /* DetailView.swift in Sources */,
+				4AA625322BB990A9003E53AE /* Error+UI.swift in Sources */,
+				4AA6253F2BB9EB3E003E53AE /* ErrorView.swift in Sources */,
+				4AA625492BBA0F68003E53AE /* CoinMarketChartObservable.swift in Sources */,
+				4AA6251C2BB615CA003E53AE /* CoinsMarketsObservable.swift in Sources */,
+				4AA6252F2BB98A5A003E53AE /* MockModels.swift in Sources */,
+				4AA6252C2BB9770A003E53AE /* CurrentPrice.swift in Sources */,
+				4AA624C62BB5C14A003E53AE /* CoinsObservable.swift in Sources */,
+				4AA6253D2BB9C948003E53AE /* String+AttributedHTML.swift in Sources */,
+				4AA625272BB6C41D003E53AE /* CoinMarket+UI.swift in Sources */,
+				4AA6254B2BBA105B003E53AE /* DetailView+Graph.swift in Sources */,
+				4AA624C42BB5BF69003E53AE /* CoinsParameters.swift in Sources */,
+				4AA625422BB9F885003E53AE /* CoinsView+Model.swift in Sources */,
+				4AA625502BBA2D87003E53AE /* CompareView.swift in Sources */,
+				4AA625172BB5CBAD003E53AE /* Coin.swift in Sources */,
+				4AA6251E2BB61604003E53AE /*  CoinMarket.swift in Sources */,
+				4A457E1A2BB4C92B00D99B49 /* MyMinieraApp.swift in Sources */,
+				4AA6254D2BBA2C99003E53AE /* GraphView.swift in Sources */,
+				4AA625342BB9919A003E53AE /* ProcessInfo+Preview.swift in Sources */,
+				4A457E292BB4CA3900D99B49 /* Network.swift in Sources */,
+				4AA625372BB9C24C003E53AE /* DetailView+SubViews.swift in Sources */,
+				4AA625242BB6C300003E53AE /* CoinsMarketsParameters.swift in Sources */,
+				4AA625452BBA0D15003E53AE /* CoinsMarketChartParameters.swift in Sources */,
+				4A457E2B2BB4CB5F00D99B49 /* Network+CoinGecko.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4A457E222BB4C92D00D99B49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4A457E232BB4C92D00D99B49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4A457E252BB4C92D00D99B49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "MyMiniera/Preview\\ Content/MockModels.swift MyMiniera/Preview\\ Content";
+				DEVELOPMENT_TEAM = G58Y4PZ34Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.lukluca.MyMiniera;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4A457E262BB4C92D00D99B49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "MyMiniera/Preview\\ Content/MockModels.swift MyMiniera/Preview\\ Content";
+				DEVELOPMENT_TEAM = G58Y4PZ34Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.lukluca.MyMiniera;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A457E112BB4C92B00D99B49 /* Build configuration list for PBXProject "MyMiniera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A457E222BB4C92D00D99B49 /* Debug */,
+				4A457E232BB4C92D00D99B49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A457E242BB4C92D00D99B49 /* Build configuration list for PBXNativeTarget "MyMiniera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A457E252BB4C92D00D99B49 /* Debug */,
+				4A457E262BB4C92D00D99B49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A457E0E2BB4C92B00D99B49 /* Project object */;
+}
